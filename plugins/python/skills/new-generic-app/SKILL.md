@@ -23,16 +23,25 @@ Scaffold a new Python project that follows these conventions.
 
 ## Steps
 
-1. **Ask where to create the project** before creating any files. Ask the user both:
-   - **Location:** the current directory, or a new subdirectory of the current directory?
-   - **Project name:** defaults to `my-app`.
+1. **Ask where to create the project** before creating any files. Ask in two stages:
+   1. First ask: should the project files go in the **current directory** or in a **new
+      subdirectory**?
+   2. Only if the user picks a new subdirectory, then ask for the **project name**
+      (suggest `my-app` as the default). This name is used both as the project name and
+      as the subdirectory name: create `./<project-name>` and `cd` into it.
 
-   If the user picks a new directory, create it as `./<project-name>` and `cd` into it.
+   If the user picks the current directory, don't ask for a name; the project name is
+   the current directory's name.
+
    Run all later steps from the project root.
 
 2. **Initialize the project** with uv and pin Python 3.13:
    ```bash
+   # New subdirectory (after cd into it):
    uv init --bare --python 3.13 --name <project-name> .
+   # Current directory (project name = directory name):
+   uv init --bare --python 3.13 .
+
    uv python pin 3.13
    ```
    `--bare` creates only `pyproject.toml` (no sample package or `main.py`), so the `src/`

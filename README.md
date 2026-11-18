@@ -46,7 +46,7 @@ Python development workflows.
 **`new-generic-app` conventions:**
 - `uv` for project and dependency management
 - Python 3.13
-- Asks whether to create the project in the current directory or a new one, and for the project name (default `my-app`)
+- Asks whether to create the project in the current directory or a new subdirectory; only for a new subdirectory does it ask for a project name (default `my-app`), which also names the subdirectory. In the current directory, the project is named after that directory
 - Source code in `src/`: entry point `src/main.py`, helper code in purpose-named packages (e.g. `src/utils/`); no package named after the project
 - Starter code: `src/lib/my_math.py` with an `add` function, called from `src/main.py`, plus one test in `test/test_my_math.py`
 - Tests in `test/`
