@@ -34,8 +34,45 @@ Scaffold a new Python project that follows these conventions.
    [tool.pytest.ini_options]
    testpaths = ["test"]
    ```
-4. Add a first test in `test/test_<module>.py` for the starter code.
-5. Check that it works:
+4. Write a `.gitignore` (replace the minimal one `uv init` generates) with entries for a
+   Python project **and** for local AI-harness/editor settings that must not be committed:
+   ```gitignore
+   # Python
+   __pycache__/
+   *.py[cod]
+   *.egg-info/
+   build/
+   dist/
+   wheels/
+
+   # Virtual environments
+   .venv/
+
+   # Tooling caches & coverage
+   .pytest_cache/
+   .ruff_cache/
+   .mypy_cache/
+   .coverage
+   htmlcov/
+
+   # Secrets / environment
+   .env
+   .env.*
+   !.env.example
+
+   # Local harness settings (per-user, not shared)
+   .claude/settings.local.json
+   CLAUDE.local.md
+
+   # OS / editors
+   .DS_Store
+   .idea/
+   .vscode/
+   ```
+   Do **not** ignore `uv.lock` or `.python-version` — commit them. Keep shared harness files
+   such as `.claude/settings.json` tracked.
+5. Add a first test in `test/test_<module>.py` for the starter code.
+6. Check that it works:
    ```bash
    uv run pytest
    ```
@@ -45,7 +82,9 @@ Scaffold a new Python project that follows these conventions.
 ```
 <project-name>/
 ├── pyproject.toml
+├── uv.lock
 ├── .python-version
+├── .gitignore
 ├── README.md
 ├── src/
 │   └── <package_name>/

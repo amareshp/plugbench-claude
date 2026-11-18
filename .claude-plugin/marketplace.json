@@ -12,7 +12,7 @@
       "name": "python",
       "source": "./plugins/python",
       "description": "Python development workflows: project scaffolding and conventions.",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }

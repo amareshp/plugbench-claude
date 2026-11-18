@@ -48,6 +48,7 @@ Python development workflows.
 - Python 3.13
 - Source code in `src/`, tests in `test/`
 - pytest for testing
+- `.gitignore` covering Python artifacts, secrets, and local harness settings (e.g. `.claude/settings.local.json`)
 - Lean tests: at most 2–3 readable tests per new function unless you ask for more
 
 ## Repository layout

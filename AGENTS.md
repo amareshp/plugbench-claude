@@ -23,7 +23,7 @@ README.md                            # User-facing docs for the marketplace and 
 
 | Plugin   | Skills            | Purpose                                         |
 |----------|-------------------|-------------------------------------------------|
-| `python` | `new-generic-app` | Scaffold a new Python project: uv, Python 3.13, `src/` layout, pytest tests in `test/`, 2–3 readable tests per function. |
+| `python` | `new-generic-app` | Scaffold a new Python project: uv, Python 3.13, `src/` layout, pytest tests in `test/`, 2–3 readable tests per function, `.gitignore` incl. local harness settings. |
 
 ## Conventions
 
