@@ -23,7 +23,7 @@ README.md                            # User-facing docs for the marketplace and 
 
 | Plugin   | Skills            | Purpose                                         |
 |----------|-------------------|-------------------------------------------------|
-| `python` | `new-generic-app` | Scaffold a new Python project: asks current dir vs new subdir, and a project name only for a new subdir (default `my-app`, also the subdir name), uv, Python 3.13, `src/main.py` + purpose-named helper packages under `src/`, starter `src/lib/my_math.py` `add()` with one test, pytest tests in `test/`, 2–3 readable tests per function, `.gitignore` incl. local harness settings. |
+| `python` | `new-generic-app` | Scaffold a new Python project: asks current dir vs new subdir, and a project name only for a new subdir (default `my-app`, also the subdir name), uv, Python 3.13, `src/main.py` + purpose-named helper packages under `src/`, starter `src/lib/my_math.py` `add()` with one test, `.env` with `SAMPLE_KEY` read in `main.py` via `python-dotenv`, pytest tests in `test/`, 2–3 readable tests per function, `.gitignore` incl. local harness settings. |
 
 ## Conventions
 

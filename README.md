@@ -49,6 +49,7 @@ Python development workflows.
 - Asks whether to create the project in the current directory or a new subdirectory; only for a new subdirectory does it ask for a project name (default `my-app`), which also names the subdirectory. In the current directory, the project is named after that directory
 - Source code in `src/`: entry point `src/main.py`, helper code in purpose-named packages (e.g. `src/utils/`); no package named after the project
 - Starter code: `src/lib/my_math.py` with an `add` function, called from `src/main.py`, plus one test in `test/test_my_math.py`
+- `.env` with a dummy `SAMPLE_KEY=SAMPLE_VALUE` entry, loaded via `python-dotenv` and printed by `src/main.py`
 - Tests in `test/`
 - pytest for testing
 - `.gitignore` covering Python artifacts, secrets, and local harness settings (e.g. `.claude/settings.local.json`)

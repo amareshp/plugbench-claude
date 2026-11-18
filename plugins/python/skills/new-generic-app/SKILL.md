@@ -47,8 +47,10 @@ Scaffold a new Python project that follows these conventions.
    `--bare` creates only `pyproject.toml` (no sample package or `main.py`), so the `src/`
    layout below is created by hand. `uv python pin` writes `.python-version`.
 
-3. **Add pytest** as a dev dependency:
+3. **Add dependencies:** `python-dotenv` (loads `.env` into the environment) as a runtime
+   dependency, and pytest as a dev dependency:
    ```bash
+   uv add python-dotenv
    uv add --dev pytest
    ```
 
@@ -68,12 +70,21 @@ Scaffold a new Python project that follows these conventions.
          """Return the sum of a and b."""
          return a + b
      ```
-   - `src/main.py`, which calls `add` with two numbers:
+   - `src/main.py`, which loads `.env`, reads and prints `SAMPLE_KEY`, and calls `add` with
+     two numbers:
      ```python
+     import os
+
+     from dotenv import load_dotenv
+
      from lib.my_math import add
 
 
      def main() -> None:
+         load_dotenv()
+         sample_value = os.getenv("SAMPLE_KEY", "<not set>")
+         print(f"SAMPLE_KEY = {sample_value}")
+
          result = add(2, 3)
          print(f"2 + 3 = {result}")
 
@@ -84,7 +95,14 @@ Scaffold a new Python project that follows these conventions.
    Later helper code goes in purpose-named packages under `src/` (or in `lib/`), each with
    an `__init__.py`, imported by package name.
 
-6. **Write a `.gitignore`** covering the Python project **and** the local AI-harness and
+6. **Create a `.env` file** in the project root with one dummy entry:
+   ```dotenv
+   SAMPLE_KEY=SAMPLE_VALUE
+   ```
+   If a `.env` already exists (e.g. when using the current directory), append the entry
+   instead of overwriting. `.env` holds local secrets and is ignored by the `.gitignore` below.
+
+7. **Write a `.gitignore`** covering the Python project **and** the local AI-harness and
    editor settings that must not be committed:
    ```gitignore
    # Python
@@ -123,7 +141,7 @@ Scaffold a new Python project that follows these conventions.
    entries into it instead of overwriting. Do **not** ignore `uv.lock` or `.python-version`;
    commit them. Keep shared harness files such as `.claude/settings.json` tracked.
 
-7. **Add one test** for `add` in `test/test_my_math.py`:
+8. **Add one test** for `add` in `test/test_my_math.py`:
    ```python
    from lib.my_math import add
 
@@ -132,7 +150,7 @@ Scaffold a new Python project that follows these conventions.
        assert add(2, 3) == 5
    ```
 
-8. **Check that it works:**
+9. **Check that it works** (`main.py` should print `SAMPLE_KEY = SAMPLE_VALUE` and `2 + 3 = 5`):
    ```bash
    uv run python src/main.py
    uv run pytest
@@ -146,6 +164,7 @@ Scaffold a new Python project that follows these conventions.
 ├── uv.lock
 ├── .python-version
 ├── .gitignore
+├── .env
 ├── src/
 │   ├── main.py
 │   └── lib/
