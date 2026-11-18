@@ -46,7 +46,9 @@ Python development workflows.
 **`new-generic-app` conventions:**
 - `uv` for project and dependency management
 - Python 3.13
-- Source code in `src/`, tests in `test/`
+- Asks whether to create the project in the current directory or a new one, and for the project name (default `my-app`)
+- Source code in `src/`: entry point `src/main.py`, helper code in purpose-named packages (e.g. `src/utils/`); no package named after the project
+- Tests in `test/`
 - pytest for testing
 - `.gitignore` covering Python artifacts, secrets, and local harness settings (e.g. `.claude/settings.local.json`)
 - Lean tests: at most 2–3 readable tests per new function unless you ask for more

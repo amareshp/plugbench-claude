@@ -1,6 +1,6 @@
 ---
 name: new-generic-app
-description: Create a new generic Python project using uv, Python 3.13, a src/ layout, and pytest tests in test/. Use when the user asks to start, scaffold, bootstrap, or create a new Python project or app.
+description: Create a new generic Python project using uv, Python 3.13, a src/ layout with src/main.py as the entry point, and pytest tests in test/. Use when the user asks to start, scaffold, bootstrap, or create a new Python project or app.
 ---
 
 # New Generic Python App
@@ -14,28 +14,50 @@ Scaffold a new Python project that follows these conventions.
   a hand-made venv.
 - **Python version:** 3.13.
 - **Source code:** all of it lives under `src/`.
+  - The entry point is `src/main.py`.
+  - Helper code goes in packages under `src/` named for what they do, e.g.
+    `src/config/`, `src/services/`, `src/utils/` (each with an `__init__.py`).
+  - Do **not** create a package named after the project (no `src/my_app/`).
 - **Tests:** all of them live under `test/` (singular, not `tests/`).
 - **Test framework:** pytest.
 
 ## Steps
 
-1. Create the project with a src layout and pinned Python:
+1. **Ask where to create the project** before creating any files. Ask the user both:
+   - **Location:** the current directory, or a new subdirectory of the current directory?
+   - **Project name:** defaults to `my-app`.
+
+   If the user picks a new directory, create it as `./<project-name>` and `cd` into it.
+   Run all later steps from the project root.
+
+2. **Initialize the project** with uv and pin Python 3.13:
    ```bash
-   uv init --package --python 3.13 <project-name>
-   cd <project-name>
+   uv init --bare --python 3.13 --name <project-name> .
+   uv python pin 3.13
    ```
-   This creates `pyproject.toml`, `.python-version` (3.13), and `src/<package_name>/__init__.py`.
-2. Add pytest as a dev dependency:
+   `--bare` creates only `pyproject.toml` (no sample package or `main.py`), so the `src/`
+   layout below is created by hand. `uv python pin` writes `.python-version`.
+
+3. **Add pytest** as a dev dependency:
    ```bash
    uv add --dev pytest
    ```
-3. Create the `test/` directory and point pytest at it in `pyproject.toml`:
+
+4. **Configure pytest** in `pyproject.toml`. `pythonpath = ["src"]` lets tests import the
+   modules in `src/` directly:
    ```toml
    [tool.pytest.ini_options]
    testpaths = ["test"]
+   pythonpath = ["src"]
    ```
-4. Write a `.gitignore` (replace the minimal one `uv init` generates) with entries for a
-   Python project **and** for local AI-harness/editor settings that must not be committed:
+
+5. **Create the source code:**
+   - `src/main.py` with a `main()` function and an `if __name__ == "__main__":` guard.
+   - Any helper code in a package under `src/` with an `__init__.py`. Import it from
+     `main.py` by package name, e.g. `from utils.text import slugify`.
+
+6. **Write a `.gitignore`** covering the Python project **and** the local AI-harness and
+   editor settings that must not be committed:
    ```gitignore
    # Python
    __pycache__/
@@ -69,26 +91,31 @@ Scaffold a new Python project that follows these conventions.
    .idea/
    .vscode/
    ```
-   Do **not** ignore `uv.lock` or `.python-version` — commit them. Keep shared harness files
-   such as `.claude/settings.json` tracked.
-5. Add a first test in `test/test_<module>.py` for the starter code.
-6. Check that it works:
+   If a `.gitignore` already exists (e.g. when using the current directory), merge these
+   entries into it instead of overwriting. Do **not** ignore `uv.lock` or `.python-version`;
+   commit them. Keep shared harness files such as `.claude/settings.json` tracked.
+
+7. **Add tests** in `test/test_<module>.py` for the helper code.
+
+8. **Check that it works:**
    ```bash
+   uv run python src/main.py
    uv run pytest
    ```
 
 ## Resulting layout
 
 ```
-<project-name>/
+<project-root>/
 ├── pyproject.toml
 ├── uv.lock
 ├── .python-version
 ├── .gitignore
-├── README.md
 ├── src/
-│   └── <package_name>/
-│       └── __init__.py
+│   ├── main.py
+│   └── <helper_package>/
+│       ├── __init__.py
+│       └── <module>.py
 └── test/
     └── test_<module>.py
 ```
@@ -105,10 +132,10 @@ Scaffold a new Python project that follows these conventions.
   - Avoid clever abstractions, deep fixture chains, and heavy parametrization that hide what is
     being tested.
 
-Example:
+Example (`test/test_math_utils.py`, testing `src/utils/math_utils.py`):
 
 ```python
-from my_app.math_utils import add
+from utils.math_utils import add
 
 
 def test_add_returns_sum_of_two_numbers():
