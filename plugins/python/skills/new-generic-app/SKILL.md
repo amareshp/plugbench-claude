@@ -51,10 +51,29 @@ Scaffold a new Python project that follows these conventions.
    pythonpath = ["src"]
    ```
 
-5. **Create the source code:**
-   - `src/main.py` with a `main()` function and an `if __name__ == "__main__":` guard.
-   - Any helper code in a package under `src/` with an `__init__.py`. Import it from
-     `main.py` by package name, e.g. `from utils.text import slugify`.
+5. **Create the starter source code.** Every new project starts with exactly this:
+   - `src/lib/__init__.py`: empty file.
+   - `src/lib/my_math.py`:
+     ```python
+     def add(a: float, b: float) -> float:
+         """Return the sum of a and b."""
+         return a + b
+     ```
+   - `src/main.py`, which calls `add` with two numbers:
+     ```python
+     from lib.my_math import add
+
+
+     def main() -> None:
+         result = add(2, 3)
+         print(f"2 + 3 = {result}")
+
+
+     if __name__ == "__main__":
+         main()
+     ```
+   Later helper code goes in purpose-named packages under `src/` (or in `lib/`), each with
+   an `__init__.py`, imported by package name.
 
 6. **Write a `.gitignore`** covering the Python project **and** the local AI-harness and
    editor settings that must not be committed:
@@ -95,7 +114,14 @@ Scaffold a new Python project that follows these conventions.
    entries into it instead of overwriting. Do **not** ignore `uv.lock` or `.python-version`;
    commit them. Keep shared harness files such as `.claude/settings.json` tracked.
 
-7. **Add tests** in `test/test_<module>.py` for the helper code.
+7. **Add one test** for `add` in `test/test_my_math.py`:
+   ```python
+   from lib.my_math import add
+
+
+   def test_add_returns_sum_of_two_numbers():
+       assert add(2, 3) == 5
+   ```
 
 8. **Check that it works:**
    ```bash
@@ -113,11 +139,11 @@ Scaffold a new Python project that follows these conventions.
 ├── .gitignore
 ├── src/
 │   ├── main.py
-│   └── <helper_package>/
+│   └── lib/
 │       ├── __init__.py
-│       └── <module>.py
+│       └── my_math.py
 └── test/
-    └── test_<module>.py
+    └── test_my_math.py
 ```
 
 ## Writing tests
@@ -132,10 +158,10 @@ Scaffold a new Python project that follows these conventions.
   - Avoid clever abstractions, deep fixture chains, and heavy parametrization that hide what is
     being tested.
 
-Example (`test/test_math_utils.py`, testing `src/utils/math_utils.py`):
+Example of a fuller set (`test/test_my_math.py`, testing `src/lib/my_math.py`):
 
 ```python
-from utils.math_utils import add
+from lib.my_math import add
 
 
 def test_add_returns_sum_of_two_numbers():

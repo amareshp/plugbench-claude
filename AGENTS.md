@@ -23,7 +23,7 @@ README.md                            # User-facing docs for the marketplace and 
 
 | Plugin   | Skills            | Purpose                                         |
 |----------|-------------------|-------------------------------------------------|
-| `python` | `new-generic-app` | Scaffold a new Python project: asks for location/name (default `my-app`), uv, Python 3.13, `src/main.py` + purpose-named helper packages under `src/`, pytest tests in `test/`, 2–3 readable tests per function, `.gitignore` incl. local harness settings. |
+| `python` | `new-generic-app` | Scaffold a new Python project: asks for location/name (default `my-app`), uv, Python 3.13, `src/main.py` + purpose-named helper packages under `src/`, starter `src/lib/my_math.py` `add()` with one test, pytest tests in `test/`, 2–3 readable tests per function, `.gitignore` incl. local harness settings. |
 
 ## Conventions
 
