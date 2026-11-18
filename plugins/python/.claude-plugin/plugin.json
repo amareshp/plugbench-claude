@@ -1,0 +1,8 @@
+{
+  "name": "python",
+  "description": "Python development workflows: project scaffolding and conventions.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Amaresh Pattanaik"
+  }
+}

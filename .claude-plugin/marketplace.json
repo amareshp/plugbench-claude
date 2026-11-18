@@ -1,0 +1,18 @@
+{
+  "name": "plugbench",
+  "owner": {
+    "name": "Amaresh Pattanaik"
+  },
+  "metadata": {
+    "description": "Personal Claude Code plugins encoding my software development and testing best practices.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "python",
+      "source": "./plugins/python",
+      "description": "Python development workflows: project scaffolding and conventions.",
+      "version": "0.1.0"
+    }
+  ]
+}
